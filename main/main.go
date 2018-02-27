@@ -1,24 +1,55 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"io/ioutil"
+	"encoding/json"
+)
+
+type Animal struct {
+	NoOfLegs int
+	Name string
+}
+
+func (a Animal) String() string {
+	return fmt.Sprintf("Animal {noOfLegs:%d, name:%s}", a.NoOfLegs, a.Name)
+}
+
+func (a Animal) CanTalk() bool {
+	return false
+}
+
+type Talker interface {
+	CanTalk() bool
+}
+
+//pot sa ignor ceea ce nu folosesc si pun in locul acelui lucru "_"
 
 func main() {
+	var creature Talker
+	creature = Animal {
+		NoOfLegs:4,
+		Name:"John",
+	}
+	fmt.Println(creature)
 
-	fmt.Println("hello world!")
-	fmt.Println("My name is Claudia")
-	fmt.Println("Razvan Farte was here")
-	fmt.Println("my name is Ioan")
-	fmt.Println("Hello my name is Alex")
-	fmt.Println("And I want to merge my changes")
-	fmt.Println("hello my name is alin")
-	fmt.Println("Hello my nombre es Bogdan")
-	fmt.Println("my name is Ioan")
-	fmt.Println("salut lumeee!!!... de la Radu Dragan")
-	fmt.Println("Hello my name is Florin!")
-	fmt.Println("salut!")
-	fmt.Println("Hello, my name is Bogdan!")
-	fmt.Println("Hello my name is Eduard")
-	fmt.Println("Hello, my name is Andrei")
-	fmt.Println("salut!")
+	//cautarea se face din path directory
+	fileContent, err := ioutil.ReadFile("main/animal.json")
+	if (err != nil) {
+		fmt.Println("Unable to open the file")
+		panic(err)
+	}
 
+	fmt.Println(string(fileContent))
+	var animals []Animal
+	//deserializeaza ce e in fileContent si fa un obiect si memoreaza-l in animal
+	err = json.Unmarshal(fileContent,&animals)
+
+	if(err != nil) {
+		fmt.Println("cannot deserialize Animal")
+		panic(err)
+	}
+
+	//check the values
+	fmt.Println(animals)
 }
