@@ -4,11 +4,15 @@ import (
 	"fmt"
 	"io/ioutil"
 	"encoding/json"
+	"goworkshop/importer"
+	"goworkshop/model"
 )
 
 type Animal struct {
-	NoOfLegs int
-	Name string
+
+	//ca sa ignore `jsno: "-"`
+	NoOfLegs int `json:"noOfLegs"`
+	Name string `json:"name"`
 }
 
 func (a Animal) String() string {
@@ -52,4 +56,20 @@ func main() {
 
 	//check the values
 	fmt.Println(animals)
+
+	if serializedAnimals, err := json.Marshal(animals); err != nil {
+		fmt.Println("unable to serialize")
+		panic(err)
+	} else {
+
+		fmt.Println(string(serializedAnimals))
+	}
+
+	importer.ImportAuthors()
+	importer.ImportBooks()
+
+	fmt.Println("Books:")
+	fmt.Println(model.Books)
+	fmt.Println("Authors")
+	fmt.Println(model.Authors)
 }
