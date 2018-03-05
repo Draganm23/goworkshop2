@@ -2,6 +2,7 @@ package persistence
 
 import (
 	"github.com/jinzhu/gorm"
+	//pentru dialect faci importul acesta
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"fmt"
 	"goworkshop/model"
