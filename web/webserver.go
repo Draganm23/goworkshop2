@@ -91,13 +91,13 @@ func createAuthor(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintln(w, "{\"message\":\"Error reading body!\"}")
 		return
 	}
-	var author model.AuthorDto
+	var author model.Author
 	if err := json.Unmarshal(body, &author); err != nil {
 		fmt.Fprintln(w, "{\"message\":\"Error unmarshling the body!\"}")
 		return
 	}
 	erra := model.Authors[author.UUID]
-	if erra == (model.AuthorDto{}) {
+	if erra == (model.Author{}) {
 		model.Authors[author.UUID] = author
 		return
 	}
@@ -112,7 +112,7 @@ func updateAuthor(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintln(w, "{\"message\":\"Error reading body!\"}")
 		return
 	}
-	var authorUpdated model.AuthorDto
+	var authorUpdated model.Author
 	if err := json.Unmarshal(body, &authorUpdated); err != nil {
 		fmt.Fprintln(w, "{\"message\":\"Error unmarshling the body!\"}")
 		return
@@ -120,7 +120,7 @@ func updateAuthor(w http.ResponseWriter, r *http.Request) {
 	uuid := mux.Vars(r)["uuid"]
 	erra := model.Authors[uuid]
 
-	if erra == (model.AuthorDto{}) {
+	if erra == (model.Author{}) {
 
 		fmt.Fprintln(w, "{\"message\":\"The author does not exist!\"}")
 		w.WriteHeader(http.StatusNotFound)

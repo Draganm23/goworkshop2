@@ -2,17 +2,17 @@ package model
 
 import "fmt"
 
-//BookDto - The DTO used to access books
-type BookDto struct {
-	UUID        string    `json:"uuid"`
-	Title       string    `json:"title"`
-	NoPages     int       `json:"noPages"`
-	ReleaseDate string    `json:"releaseDate"`
-	Author      AuthorDto `json:"author"`
+//Book - The DTO used to access books
+type Book struct {
+	UUID        string `json:"uuid"`
+	Title       string `json:"title"`
+	NoPages     int    `json:"noPages"`
+	ReleaseDate string `json:"releaseDate"`
+	Author      Author `json:"author"`
 }
 
-//AuthorDto - The DTO used to access authors
-type AuthorDto struct {
+//Author - The DTO used to access authors
+type Author struct {
 	UUID      string `json:"uuid"`
 	FirstName string `json:"firstName"`
 	LastName  string `json:"lastName"`
@@ -20,9 +20,9 @@ type AuthorDto struct {
 	Death     string `json:"death"`
 }
 
-type AuthorsSlice []AuthorDto
+type AuthorsSlice []Author
 
-func (p *AuthorsSlice) Remove(element AuthorDto) error {
+func (p *AuthorsSlice) Remove(element Author) error {
 	var err = fmt.Errorf("could not find element %s", element)
 	var updatedSlice AuthorsSlice
 	for _, value := range *p {
@@ -40,7 +40,7 @@ func (p *AuthorsSlice) Remove(element AuthorDto) error {
 
 
 //Books - the list of available books
-var Books map[string]BookDto
+var Books map[string]Book
 
 // Authors - the list of available authors
-var Authors map[string]AuthorDto
+var Authors map[string]Author
