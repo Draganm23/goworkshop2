@@ -192,6 +192,15 @@ func getAllBooks(w http.ResponseWriter, r *http.Request) {
 
 }
 
+func log(funcHandler http.HandlerFunc) http.HandlerFunc{
+	fmt.Println("Returning the function")
+	return func (rw http.ResponseWriter, r *http.Request){
+		fmt.Println("New REST request to url: "+r.URL.Path)
+		funcHandler(rw, r)
+		fmt.Println("Rest request ended")
+	}
+}
+
 func getPort() string {
 	port := os.Getenv(API_PORT_NAME)
 	if port != "" {
